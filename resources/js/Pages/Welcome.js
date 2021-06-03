@@ -20,27 +20,27 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     minHeight: 'calc(100vh - 120px)',
-    marginTop: '50px',
-    marginBottom: '50px'
+    paddingTop: '50px',
+    paddingBottom: '50px'
   },
   minHeight: {
     minHeight: 'calc(100vh - 120px)'
   },
   welcome: {
-    backgroundColor: '#0288d1',
+    backgroundColor: theme.palette.background.paper,
     textAlign: 'center',
     padding: '16px 0',
-    color: 'white'
   },
   presentation: {
     paddingTop: '12px',
-    backgroundColor: '#b2dfdb',
+    backgroundColor: '#607d8b',
     color: 'white'
   }
 }));
 
 const AntTabs = withStyles({
   root: {
+    borderBottom: '1px solid #e8e8e8',
     marginBottom: '12px'
   },
   indicator: {
@@ -67,15 +67,15 @@ const AntTab = withStyles((theme) => ({
       '"Segoe UI Symbol"',
     ].join(','),
     '&:hover': {
-      color: 'gray',
+      color: '#40a9ff',
       opacity: 1,
     },
     '&$selected': {
-      color: 'white',
+      color: '#1890ff',
       fontWeight: theme.typography.fontWeightMedium,
     },
     '&:focus': {
-      color: 'gray',
+      color: '#40a9ff',
     },
   },
   selected: {},
@@ -111,7 +111,7 @@ const Welcome = ({ status, canResetPassword }) => {
               </div>
               <CardContent>
                 <TabPanel id="login-tab" value={tab} index={0}>
-                  <Login status={status} canResetPassword={canResetPassword} />
+                  <Login status={status} />
                 </TabPanel>
                 <TabPanel id="register-tab" value={tab} index={1}>
                   <Register />

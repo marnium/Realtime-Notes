@@ -11,6 +11,7 @@ import Button from '@/Components/Button';
 const Register = () => {
   const { data, setData, post, processing, errors, reset } = useForm({
     name: '',
+    lastname: '',
     email: '',
     password: '',
     password_confirmation: '',
@@ -23,7 +24,7 @@ const Register = () => {
   }, []);
 
   const onHandleChange = (event) => {
-    setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+    setData(event.target.name, event.target.value);
   };
 
   const submit = (e) => {
@@ -40,9 +41,16 @@ const Register = () => {
           label="Nombre"
           icon={<AccountCircle />}
           id="register-name"
-          isFocused={true}
           value={data.name}
           name="name"
+          handleChange={onHandleChange}
+        />
+        <Input
+          label="Apellidos"
+          icon={<AccountCircle />}
+          id="register-lastname"
+          value={data.lastname}
+          name="lastname"
           handleChange={onHandleChange}
         />
         <Input

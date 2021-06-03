@@ -1,25 +1,28 @@
 import React from 'react';
+import { Inertia } from '@inertiajs/inertia';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Toolbar,
+  Typography,
+  Paper,
+  Checkbox,
+  IconButton,
+  Tooltip,
+  Fab
+} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
-import Box from '@material-ui/core/Box';
+import Dialog from '@/Components/Dialog';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -112,7 +115,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const {numSelected, title, onDelete} = props;
+  const {numSelected, title, handleOpenDialog, processing} = props;
 
   return (
     <Toolbar
@@ -131,8 +134,8 @@ const EnhancedTableToolbar = (props) => {
       )}
 
       {numSelected > 0 ? (
-        <Tooltip title="Eliminar" onClick={onDelete}>
-          <IconButton aria-label="delete">
+        <Tooltip title="Eliminar" onClick={handleOpenDialog}>
+          <IconButton aria-label="delete" disabled={processing}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -172,12 +175,43 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
+  const [open, setOpen] = React.useState(false);
+  const [processing, setProcessing] = React.useState(false);
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState(headCells[0].id);
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+
+  const handleDelete = () => {
+    Inertia.visit(route('app.note'),
+    {
+      data: {idsNotes: selected},
+      replace: true,
+      method: 'delete',
+      onStart: () => setProcessing(true),
+      onFinish: () => setProcessing(false),
+      onError: () => {
+        toast.error('Error al eliminar la(s) nota(s)', {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+    });
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -229,17 +263,19 @@ const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
 
   return (
     <div className={classes.root}>
+      <Dialog onDelete={handleDelete} handleClose={handleClose} open={open} />
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
           numSelected={selected.length}
           title={title}
-          onDelete={() => onDelete(selected)}
+          handleOpenDialog={handleOpen}
+          processing={processing}
         />
         <TableContainer>
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size="medium"
+            size="small"
             aria-label="enhanced table"
           >
             <EnhancedTableHead

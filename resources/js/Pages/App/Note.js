@@ -1,12 +1,18 @@
 import React from 'react';
 import { toast } from 'react-toastify';
 import { Inertia } from '@inertiajs/inertia';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
+import {
+  CardContent,
+  TextField,
+  Button,
+  Container,
+  Grid,
+  Card,
+  Box
+} from '@material-ui/core';
+import SaveIcon from '@material-ui/icons/Save';
 
-import App, {AuthContext} from '@/Layouts/App';
+import App, { AuthContext } from '@/Layouts/App';
 
 const Note = (props) => {
   const [title, setTitle] = React.useState('');
@@ -15,7 +21,8 @@ const Note = (props) => {
   const [_auth, _setAuth, idEdit, setIdEdit] = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    _setAuth(props.auth);
+    if (props.auth)
+      _setAuth(props.auth);
 
     if (props.note) {
       setIdEdit(props.note.id);
@@ -26,11 +33,10 @@ const Note = (props) => {
     }
     
     return () => {
-      _setAuth(null);
       setIdEdit(0)
     }
-  }, [props.auth]);
-
+  }, [props]);
+  
   console.log('Props de Note', props);
 
   const handleChangeTitle = (event) => {
@@ -39,7 +45,8 @@ const Note = (props) => {
   const handleChangeContent = event => {
     setContent(event.target.value);
   };
-  const handleClick = (e) => {
+
+  const handleSubmitNote = (e) => {
     e.preventDefault();
     const config = {
       replace: true,
@@ -54,10 +61,9 @@ const Note = (props) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
       },
       onError: (error) => {
-        console.log("error: ", error);
         toast.error('No se pudo guardar tu nota', {
           position: "top-right",
           autoClose: 5000,
@@ -66,7 +72,7 @@ const Note = (props) => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          });
+        });
       },
       onFinish: () => {
         setProcessing(false);
@@ -88,34 +94,57 @@ const Note = (props) => {
 
   return (
     <Container fixed>
-      <Box display="flex" flexDirection="column">
-      <TextField
-          id="create-or-edit-title"
-          name="title"
-          label="Titulo"
-          value={title}
-          onChange={handleChangeTitle}
-          margin="normal"
-          required
-        />
-        <TextField
-          id="create-or-edit-title"
-          label="Escribe tu nota"
-          multiline
-          rows={10}
-          variant="outlined"
-          value={content}
-          onChange={handleChangeContent}
-          margin="normal"
-          required
-        />
-        <Button
-          onClick={handleClick}
-          variant="outlined"
-          color="primary"
-          disabled={processing}
-        >Guardar nota</Button>
-      </Box>
+      <Grid container spacing={1}>
+        <Grid item xs={12} md={6}>
+          <Card>
+            <CardContent>
+              <form onSubmit={handleSubmitNote}>
+                <TextField
+                  id="create-or-edit-title"
+                  name="title"
+                  label="Titulo"
+                  value={title}
+                  onChange={handleChangeTitle}
+                  margin="normal"
+                  fullWidth
+                  required
+                />
+                <TextField
+                  id="create-or-edit-title"
+                  label="Escribe tu nota"
+                  multiline
+                  rows={10}
+                  variant="outlined"
+                  value={content}
+                  onChange={handleChangeContent}
+                  margin="normal"
+                  fullWidth
+                  required
+                />
+                <Box display="flex" justifyContent="center" mt={1}>
+                  <Button
+                  type="submit"
+                  disabled={processing}
+                  variant="contained"
+                  color="primary"
+                  startIcon={<SaveIcon />}
+                >Guardar Nota</Button>
+                </Box>
+              </form>
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <form>
+            <input type="file" accept="image/*" />
+            <Button
+              variant="outlined"
+              color="primary"
+              disabled={processing}
+            >Subir imagen</Button>
+          </form>
+        </Grid>
+      </Grid>
     </Container>
   );
 };

@@ -18,16 +18,10 @@ const Input = ({
   value,
   name,
   isRequired = true,
-  isFocused = false,
-  handleChange,
+  readonly = false,
+  handleChange = null,
 }) => {
-  const input = useRef();
   const classes = useStyles();
-
-  useEffect(() => {
-    if (isFocused)
-      input.current.focus();
-  }, []);
 
   return (
     <div className={classes.margin}>
@@ -43,7 +37,9 @@ const Input = ({
             required={isRequired}
             onChange={handleChange}
             name={name}
-            ref={input}
+            InputProps={{
+              readOnly: readonly,
+          }}
           />
         </Grid>
       </Grid>

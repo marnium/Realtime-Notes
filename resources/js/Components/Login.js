@@ -5,14 +5,12 @@ import LockRounded from '@material-ui/icons/LockRounded';
 
 import ValidationErrors from './ValidationErrors';
 import Input from './Input';
-import CheckBox from './CheckBox';
 import Button from './Button';
 
 const Login = ({status}) => {
   const { data, setData, post, processing, errors, reset } = useForm({
     email: '',
     password: '',
-    remember: '',
   });
 
   useEffect(() => {
@@ -20,8 +18,7 @@ const Login = ({status}) => {
   }, []);
 
   const onHandleChange = (event) => {
-    setData(event.target.name, event.target.type === 'checkbox' ?
-      event.target.checked : event.target.value);
+    setData(event.target.name, event.target.value);
   };
 
   const submit = (e) => {
@@ -43,7 +40,6 @@ const Login = ({status}) => {
           id="login-email"
           value={data.email}
           name="email"
-          isFocused={true}
           handleChange={onHandleChange}
         />
         <Input
@@ -53,12 +49,6 @@ const Login = ({status}) => {
           type="password"
           value={data.password}
           name="password"
-          handleChange={onHandleChange}
-        />
-        <CheckBox
-          label="Mantener sesión"
-          value={Boolean(data.remember)}
-          name="remember"
           handleChange={onHandleChange}
         />
 

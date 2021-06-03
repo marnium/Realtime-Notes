@@ -1,7 +1,5 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
 import Conatiner from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
 
 import App, {AuthContext} from '@/Layouts/App';
 import Table from '@/Components/Table';
@@ -18,40 +16,31 @@ const MyNotes = (props) => {
   ];
 
   React.useEffect(() => {
-    _setAuth(props.auth);
-    
-    return () => {
-      _setAuth(null);
-    }
+    if (props.auth)
+      _setAuth(props.auth);
   }, [props.auth]);
 
   let notes = [];
   if (props.notes) {
     const configDate = {
-      timeZone: 'UTC',
       weekday: 'long',
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
     }
     notes =  props.notes.map(note => ({
       id: note.id,
       title: note.title,
-      created_at: new Date(Date.parse(props.notes[0].created_at))
+      created_at: new Date(note.created_at)
             .toLocaleString('es-ES', configDate),
-      updated_at: new Date(Date.parse(props.notes[0].created_at))
+      updated_at: new Date(note.updated_at)
             .toLocaleString('es-ES', configDate),
     }));
   }
 
-  const hanldeDelte = (selected) => {
-    Inertia.visit(route('app.note'),
-    {
-      data: {idsNotes: selected},
-      replace: true,
-      method: 'delete'
-    });
-  };
   const handleEdit = id => {
     Inertia.get(route('app.note.edit', id), {}, {
       replace: true
@@ -64,7 +53,6 @@ const MyNotes = (props) => {
         headCells={headCells}
         rows={notes}
         title="Mis Notas"
-        onDelete={hanldeDelte}
         onEdit={handleEdit}
       />
     </Conatiner>

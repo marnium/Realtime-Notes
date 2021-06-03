@@ -81,7 +81,7 @@ const App = ({ children }) => {
       <ToastContainer />
       <main className={classes.root}>
         <ThemeProvider theme={theme}>
-          <AppBar position="static" color="default">
+          <AppBar position="sticky" color="default">
             <div className={classes.containerAppBar}>
               <Tabs value={tab}
                 onChange={handleChangeTab}
@@ -102,7 +102,7 @@ const App = ({ children }) => {
                 aria-controls="app-menu"
                 aria-haspopup="true"
                 onClick={handleClickMenu}
-              >{auth && auth.user.name}</Button>
+              >{auth && auth.user.name + ' ' + auth.user.lastname}</Button>
               <Menu
                 id="app-menu"
                 anchorEl={itemMenu}
