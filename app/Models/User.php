@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Note;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -43,10 +44,19 @@ class User extends Authenticatable
     ];
 
     /**
-     * Obtiene solo las notas del usuario
+     * Obtiene todas las notas del
+     * usario
      */
     public function notes()
     {
         return $this->hasMany(Note::class);
+    }
+
+    /**
+     * Obtiene todas las imagenes del usuario
+     */
+    public function images()
+    {
+        return $this->hasMany(Image::class);
     }
 }

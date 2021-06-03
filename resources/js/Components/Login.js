@@ -24,6 +24,7 @@ const Login = ({status}) => {
   const submit = (e) => {
     e.preventDefault();
 
+    console.log(route('login'));
     post(route('login'), {
       replace: true
     });

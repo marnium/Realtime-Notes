@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Image;
 
 class Note extends Model
 {
@@ -19,4 +20,12 @@ class Note extends Model
         'content',
         'user_id'
     ];
+
+    /**
+     * Obtener la imagen de esta nota
+     */
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 }
