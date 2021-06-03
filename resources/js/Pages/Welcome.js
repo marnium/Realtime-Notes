@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   presentation: {
     paddingTop: '12px',
-    backgroundColor: '#bbdefb',
+    backgroundColor: '#9fa8da',
   }
 }));
 
@@ -120,8 +120,16 @@ const Welcome = ({ status }) => {
             <Grid item container xs={12} md={6}
               className={classes.presentation + ' ' + classes.minHeight}>
               <CardContent>
+                <Typography variant="h6">
+                  Bienvenido
+                </Typography>
                 <Typography variant="body1">
-                  Hola, estas en el sitio indicado para tomar tus notas
+                  Te encuentras en un lugar seguro, libre y apropiado para
+                  redactar tus pensamientos, tus metas, tu lista de música
+                  favorita o lo que quieras.
+                </Typography>
+                <Typography>
+                  ¡Pero, si te vas, vuelve pronto!
                 </Typography>
               </CardContent>
             </Grid>

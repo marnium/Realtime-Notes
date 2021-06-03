@@ -62,7 +62,7 @@ const App = ({ children }) => {
   };
 
   const handleLogut = () => {
-    Inertia.post(route('logout'), {}, {
+    Inertia.post('/logout', {}, {
       replace: true
     });
   }
