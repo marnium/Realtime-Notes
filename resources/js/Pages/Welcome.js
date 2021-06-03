@@ -33,8 +33,7 @@ const useStyles = makeStyles(theme => ({
   },
   presentation: {
     paddingTop: '12px',
-    backgroundColor: '#607d8b',
-    color: 'white'
+    backgroundColor: '#bbdefb',
   }
 }));
 
@@ -81,7 +80,7 @@ const AntTab = withStyles((theme) => ({
   selected: {},
 }))((props) => <Tab disableRipple {...props} />);
 
-const Welcome = ({ status, canResetPassword }) => {
+const Welcome = ({ status }) => {
   const classes = useStyles();
   const [tab, setTab] = React.useState(0);
 
@@ -122,8 +121,7 @@ const Welcome = ({ status, canResetPassword }) => {
               className={classes.presentation + ' ' + classes.minHeight}>
               <CardContent>
                 <Typography variant="body1">
-                  Con esta aplicación tendras todas tus agendas
-                  en un solo lugar
+                  Hola, estas en el sitio indicado para tomar tus notas
                 </Typography>
               </CardContent>
             </Grid>

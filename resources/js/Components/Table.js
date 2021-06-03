@@ -185,7 +185,7 @@ const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleDelete = () => {
-    Inertia.visit(route('app.note'),
+    Inertia.visit('/app/note',
     {
       data: {idsNotes: selected},
       replace: true,

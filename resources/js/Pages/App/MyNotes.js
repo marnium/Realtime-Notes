@@ -6,7 +6,7 @@ import Table from '@/Components/Table';
 import { Inertia } from '@inertiajs/inertia';
 
 const MyNotes = (props) => {
-  const [_auth, _setAuth] = React.useContext(AuthContext);
+  const [_auth, _setAuth, idEdit, setIdEdit, setTap] = React.useContext(AuthContext);
   const headCells = [
     { id: 'id', numeric: true, disablePadding: false, label: 'ID' },
     { id: 'title', numeric: false, disablePadding: false, label: 'Titulo' },
@@ -14,6 +14,10 @@ const MyNotes = (props) => {
     { id: 'updated_at', numeric: false, disablePadding: false, label: 'Ultima Actualización' },
     { id: 'edit', numeric: false, disablePadding: false, label: 'Editar' },
   ];
+
+  React.useEffect(() => {
+    setTap(1);
+  }, []);
 
   React.useEffect(() => {
     if (props.auth)
@@ -42,7 +46,7 @@ const MyNotes = (props) => {
   }
 
   const handleEdit = id => {
-    Inertia.get(route('app.note.edit', id), {}, {
+    Inertia.get(`/app/note/${id}`, {}, {
       replace: true
     })
   };

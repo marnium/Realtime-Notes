@@ -19,27 +19,29 @@ import Input from '@/Components/Input';
 import Button from '@/Components/Button';
 
 const Home = (props) => {
-  const [_auth, _setAuth] = React.useContext(AuthContext);
+  const [_auth, _setAuth, idEdit, setIdEdit, setTap] = React.useContext(AuthContext);
   const [edit, setEdit] = React.useState(false);
   const [temData, setTemData] = React.useState({
     name: '',
     lastname: ''
   });
-  const {data, setData, post, processing, errors, wasSuccessful} = useForm({
+  const {data, setData, post, processing, errors} = useForm({
     name: '',
     lastname: '',
   });
 
   React.useEffect(() => {
-    if (props.auth)
-      _setAuth(props.auth);
-  }, [props.auth]);
+    setTap(0);
+  }, []);
 
   React.useEffect(() => {
-    if (_auth) {
-      setData({name: _auth.user.name, lastname: _auth.user.lastname});
+    if (props.auth) {
+      _setAuth(props.auth);
+      setData({name: props.auth.user.name,
+        lastname: props.auth.user.lastname});
     }
-  }, [_auth]);
+    
+  }, [props.auth]);
 
   const handleEdit = (event) => {
     if (event.target.checked)
@@ -57,7 +59,7 @@ const Home = (props) => {
     e.preventDefault();
     setEdit(false);
 
-    post(route('user'),{
+    post('/user',{
       replace: true,
       onSuccess: () => {
         toast.success('Se actualizaron tus datos', {
@@ -76,7 +78,7 @@ const Home = (props) => {
   return (
     <Container fixed>
       <Typography variant="h4" gutterBottom align="center">
-        Bienvenido. A tomar notas se ha dicho.
+        Bienvenido. Plasma tus pensamientos y creatividad en nuestra página.
       </Typography>
       <Card>
         <CardActions>

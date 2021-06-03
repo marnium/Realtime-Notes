@@ -30,7 +30,7 @@ const Register = () => {
   const submit = (e) => {
     e.preventDefault();
 
-    post(route('register'), {replace: true});
+    post('/register', {replace: true});
   };
 
   return (

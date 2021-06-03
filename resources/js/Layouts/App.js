@@ -37,30 +37,21 @@ const App = ({ children }) => {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(null);
   const [idEdit, setIdEdit] = React.useState(null);
-  const [tab, setTab] = React.useState(tabs.findIndex(
-    tab => idEdit ? 2 : route().current(tab.route))
-  );
+  const [tab, setTab] = React.useState(0);
   const [itemMenu, setItemMenu] = React.useState(null);
-
-  React.useEffect(() => {
-      if (idEdit !== null) {
-        setTab(2);
-      }
-  }, [idEdit]);
 
   const handleChangeTab = (event, newTab) => {
     let url;
-    if (idEdit)
-      url = route(tabs[newTab].route, idEdit);  
+    if (idEdit && newTab === 2)
+      url = `${tabs[newTab + 1].route}${idEdit}`;
     else
-      url = route(tabs[newTab].route);
+      url = tabs[newTab].route;
     
+    console.log('Solicitando: ', url);
+
     Inertia.get(
       url, {}, {
-      replace: true,
-      onSuccess: () => {
-        setTab(newTab);
-      }
+      replace: true
     })
   };
   const handleClickMenu = event => {
@@ -77,7 +68,7 @@ const App = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={[auth, setAuth, idEdit, setIdEdit]}>
+    <AuthContext.Provider value={[auth, setAuth, idEdit, setIdEdit, setTab]}>
       <ToastContainer />
       <main className={classes.root}>
         <ThemeProvider theme={theme}>

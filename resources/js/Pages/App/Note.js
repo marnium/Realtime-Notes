@@ -18,7 +18,11 @@ const Note = (props) => {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [processing, setProcessing] = React.useState(false);
-  const [_auth, _setAuth, idEdit, setIdEdit] = React.useContext(AuthContext);
+  const [_auth, _setAuth, idEdit, setIdEdit, setTap] = React.useContext(AuthContext);
+
+  React.useEffect(() => {
+    setTap(2);
+  }, []);
 
   React.useEffect(() => {
     if (props.auth)
@@ -33,11 +37,11 @@ const Note = (props) => {
     }
     
     return () => {
-      setIdEdit(0)
+      setIdEdit(0);
     }
   }, [props]);
-  
-  console.log('Props de Note', props);
+
+  console.log('id en Notes: ', idEdit);
 
   const handleChangeTitle = (event) => {
     setTitle(event.target.value);
@@ -85,10 +89,10 @@ const Note = (props) => {
     }
     if (!idEdit) {
       console.log('Nueva nota');
-      Inertia.post(route('app.note'), data, config);
+      Inertia.post('/app/note', data, config);
     } else {
       console.log('Actualizando datos');
-      Inertia.put(route('app.note'), data, config);
+      Inertia.put('/app/note', data, config);
     }
   };
 
