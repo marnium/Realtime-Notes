@@ -26,7 +26,7 @@ Route::get('/', function () {
 
 Route::get('/app', function () {
     return Inertia::render('Home');
-})->middleware(['auth', 'verified'])->name('app');
+})->middleware(['auth'])->name('app');
 
 require __DIR__.'/app_notes.php';
 require __DIR__.'/app_links.php';
