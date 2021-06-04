@@ -7,6 +7,7 @@ use App\Models\Note;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NoteController extends Controller
 {
@@ -43,13 +44,25 @@ class NoteController extends Controller
      */
     public function show($id)
     {
-        $idUser = Auth::id();
-        $note = User::find($idUser)->notes
+        $user = User::find(Auth::id());
+        $note = $user->notes()
             ->where('id', $id)->first();
-
+        
         if ($note) {
+            $images = $user->images;
+
+            foreach ($images as $image) {
+                $image->name = Storage::url($image->name);
+            }
+
+            $image = $note->image;
+            if ($image)
+                $image->name = Storage::url($image->name);
+            
             return Inertia::render('App/Note', [
-                'note' => $note
+                'note' => $note,
+                'image' => $image,
+                'images' => $images
             ]);
         } else {
             return redirect()->route('app.my_notes');
@@ -70,12 +83,12 @@ class NoteController extends Controller
         ]);
         
         $user = User::find(Auth::id());
-        $user->notes()->create([
+        $note = $user->notes()->create([
             'title' => $request->title,
             'content' => $request->content,
         ]);
 
-        return redirect()->route('app.note');
+        return redirect()->route('app.note.edit', ['id' => $note->id]);
     }
 
     /**
@@ -90,13 +103,14 @@ class NoteController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|max:700'
         ]);
-        
+
         $idUser = Auth::id();
         $note = Note::where('id', $request->id)
             ->where('user_id', $idUser)
             ->update([
                 'title' => $request->title,
-                'content' => $request->content
+                'content' => $request->content,
+                'image_id' => $request->image_id
             ]);
         
         if ($note) {
