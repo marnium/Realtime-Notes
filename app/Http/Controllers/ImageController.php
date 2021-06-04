@@ -33,7 +33,7 @@ class ImageController extends Controller
             ]);
         }
 
-        return redirect()->route('app.note.edit', $request->note_id);
+        return redirect('/app/note/'.$request->note_id);
     }
 
     /**
@@ -61,7 +61,7 @@ class ImageController extends Controller
             // Eliminando del storage y la información de la base de datos
             if (Storage::delete($image->name)) {
                 $image->delete();
-                return redirect()->route('app.note.edit', $request->note_id);
+                return redirect('/app/note/'.$request->note_id);
             } else {
                 $error = \Illuminate\Validation\ValidationException::withMessages([
                     'image_id' => ['No se pudo eliminar la imagen']

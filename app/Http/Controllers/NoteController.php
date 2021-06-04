@@ -65,7 +65,7 @@ class NoteController extends Controller
                 'images' => $images
             ]);
         } else {
-            return redirect()->route('app.my_notes');
+            return redirect('/app/my-notes');
         }
     }
 
@@ -88,7 +88,7 @@ class NoteController extends Controller
             'content' => $request->content,
         ]);
 
-        return redirect()->route('app.note.edit', ['id' => $note->id]);
+        return redirect('/app/note/'.$note->id);
     }
 
     /**
@@ -114,9 +114,9 @@ class NoteController extends Controller
             ]);
         
         if ($note) {
-            return redirect()->route('app.note.edit', $request->id);
+            return redirect('/app/note/'.$request->id);
         } else {
-            return redirect()->route('app.my_notes');
+            return redirect('app/my-notes');
         }
     }
 
@@ -135,6 +135,6 @@ class NoteController extends Controller
             ->where('id', $id)->delete();
         }
         
-        return redirect()->route('app.my_notes');
+        return redirect('app/my-notes');
     }
 }
