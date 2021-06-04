@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ImageController;
 use App\Http\Controllers\NoteController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,12 +26,4 @@ Route::put('app/note', [NoteController::class, 'update'])
 
 // Eliminar una o varias notas
 Route::delete('app/note', [NoteController::class, 'destroy'])
-  ->middleware(['auth', 'verified']);
-
-// Subir una imagen
-Route::post('/image', [ImageController::class, 'store'])
-  ->middleware(['auth', 'verified']);
-
-  // Eliminar una image
-Route::delete('/image', [ImageController::class, 'destroy'])
   ->middleware(['auth', 'verified']);

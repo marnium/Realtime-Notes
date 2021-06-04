@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Link;
 use App\Models\User;
-use App\Models\Note;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
-class NoteController extends Controller
+class LinkController extends Controller
 {
-    /**
+        /**
      * Muestra la vista de todas las notas
-     * Vista: App/MyNotes
+     * Vista: App/MyLinks
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $idUser = Auth::id();
-        $notes = User::find($idUser)->notes;
+        $links = User::find($idUser)->links;
         
-        return Inertia::render('App/MyNotes', [
-            'notes' => $notes
+        return Inertia::render('App/MyLinks', [
+            'links' => $links
         ]);
     }
 
@@ -35,7 +35,7 @@ class NoteController extends Controller
      */
     public function create()
     {
-        return Inertia::render('App/Note');
+        return Inertia::render('App/Link');
     }
 
     /**
@@ -44,15 +44,15 @@ class NoteController extends Controller
     public function show($id)
     {
         $user = User::find(Auth::id());
-        $note = $user->notes()
+        $link = $user->links()
             ->where('id', $id)->first();
         
-        if ($note) {
-            return Inertia::render('App/Note', [
-                'note' => $note
+        if ($link) {
+            return Inertia::render('App/Link', [
+                'link' => $link
             ]);
         } else {
-            return redirect('/app/my-notes');
+            return redirect('/app/my-links');
         }
     }
 
@@ -65,17 +65,21 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required|max:700'
+            'link' => 'required|max:255',
+            'page' => 'required|max:255',
+            'autor' => 'required|max:255',
+            'year' => 'required|digits:4'
         ]);
         
         $user = User::find(Auth::id());
-        $note = $user->notes()->create([
-            'title' => $request->title,
-            'content' => $request->content,
+        $link = $user->links()->create([
+            'link' => $request->link,
+            'page' => $request->page,
+            'autor' => $request->autor,
+            'year' => $request->year
         ]);
 
-        return redirect('/app/note/'.$note->id);
+        return redirect('/app/link/'.$link->id);
     }
 
     /**
@@ -87,22 +91,26 @@ class NoteController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required|max:700'
+            'link' => 'required|max:255',
+            'page' => 'required|max:255',
+            'autor' => 'required|max:255',
+            'year' => 'required|digits:4'
         ]);
 
         $idUser = Auth::id();
-        $note = Note::where('id', $request->id)
+        $link = Link::where('id', $request->id)
             ->where('user_id', $idUser)
             ->update([
-                'title' => $request->title,
-                'content' => $request->content,
+                'link' => $request->link,
+                'page' => $request->page,
+                'autor' => $request->autor,
+                'year' => $request->year
             ]);
         
-        if ($note) {
-            return redirect('/app/note/'.$request->id);
+        if ($link) {
+            return redirect('/app/link/'.$request->id);
         } else {
-            return redirect('app/my-notes');
+            return redirect('app/my-links');
         }
     }
 
@@ -116,11 +124,11 @@ class NoteController extends Controller
     {
         $idUser = Auth::id();
         
-        foreach ($request->idsNotes as $id) {
-            Note::where('user_id', $idUser)
+        foreach ($request->idsLinks as $id) {
+            Link::where('user_id', $idUser)
             ->where('id', $id)->delete();
         }
         
-        return redirect('app/my-notes');
+        return redirect('app/my-links');
     }
 }

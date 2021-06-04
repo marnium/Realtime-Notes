@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Models\Note;
-use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Link;
 
 class User extends Authenticatable
 {
@@ -53,10 +53,10 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtiene todas las imagenes del usuario
+     * Obtiene todos los links de la nota
      */
-    public function images()
+    public function links()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(Link::class);
     }
 }

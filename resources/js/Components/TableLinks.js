@@ -127,7 +127,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected + (numSelected > 1 ? ' seleccionados' : ' seleccionado')}
         </Typography>
       ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+        <Typography className={classes.title} variant="h6" id="table-link-title" component="div">
           {title}
         </Typography>
       )}
@@ -167,7 +167,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
+const EnhancedTable = ({title, rows, headCells, onEdit}) => {
   const [open, setOpen] = React.useState(false);
   const [processing, setProcessing] = React.useState(false);
   const classes = useStyles();
@@ -178,15 +178,15 @@ const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleDelete = () => {
-    Inertia.visit('/app/note',
+    Inertia.visit('/app/link',
     {
-      data: {idsNotes: selected},
+      data: {idsLinks: selected},
       replace: true,
       method: 'delete',
       onStart: () => setProcessing(true),
       onFinish: () => setProcessing(false),
       onError: () => {
-        toast.error('Error al eliminar la(s) nota(s)', {
+        toast.error('Error al eliminar lo(s) link(s)', {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
@@ -286,7 +286,7 @@ const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  const labelId = `table-links-${index}`;
 
                   return (
                     <TableRow
@@ -307,7 +307,10 @@ const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.id}
                       </TableCell>
-                      <TableCell align="center">{row.title}</TableCell>
+                      <TableCell align="center">{row.autor}</TableCell>
+                      <TableCell align="center">{row.year}</TableCell>
+                      <TableCell align="center">{row.page}</TableCell>
+                      <TableCell align="center">{row.link}</TableCell>
                       <TableCell align="center">{row.created_at}</TableCell>
                       <TableCell align="center">{row.updated_at}</TableCell>
                       <TableCell align="center">
@@ -335,7 +338,7 @@ const EnhancedTable = ({title, rows, headCells, onDelete, onEdit}) => {
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-          labelRowsPerPage="Notas por pagina"
+          labelRowsPerPage="Links por pagina"
         />
       </Paper>
     </div>

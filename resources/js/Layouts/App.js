@@ -37,6 +37,7 @@ const App = ({ children }) => {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(null);
   const [idEdit, setIdEdit] = React.useState(null);
+  const [idEditLink, setIdEditLink] = React.useState(null);
   const [tab, setTab] = React.useState(0);
   const [itemMenu, setItemMenu] = React.useState(null);
 
@@ -44,10 +45,16 @@ const App = ({ children }) => {
     let url;
     if (idEdit && newTab === 2)
       url = `${tabs[newTab + 1].route}${idEdit}`;
-    else
+    else if (newTab === 4) {
+      if (idEditLink) {
+        url = `${tabs[newTab + 1].route}${idEdit}`;
+      } else {
+        url = tabs[newTab + 2].route;
+      }
+    } else if (newTab === 3) {
+      url = tabs[newTab + 1].route;
+    } else
       url = tabs[newTab].route;
-    
-    console.log('Solicitando: ', url);
 
     Inertia.get(
       url, {}, {
@@ -68,7 +75,7 @@ const App = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={[auth, setAuth, idEdit, setIdEdit, setTab]}>
+    <AuthContext.Provider value={[auth, setAuth, idEdit, setIdEdit, setTab, idEditLink, setIdEditLink]}>
       <ToastContainer />
       <main className={classes.root}>
         <ThemeProvider theme={theme}>
@@ -87,6 +94,12 @@ const App = ({ children }) => {
                   <Tab label="Editar Nota" id="app-tab-edit" aria-controls="app-tab-edit" />
                   :
                   <Tab label="Crear Nota" id="app-tab-create" aria-controls="app-tab-create" />
+                }
+                <Tab label="Mis Link" id="app-tab-links" aria-controls="app-tab-links" />
+                {idEditLink ?
+                  <Tab label="Editar Link" id="app-tab-edit-link" aria-controls="app-tab-edit-link" />
+                  :
+                  <Tab label="Crear Link" id="app-tab-create-link" aria-controls="app-tab-create-link" />
                 }
               </Tabs>
               <Button
