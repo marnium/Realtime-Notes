@@ -1,62 +1,80 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Realtime Notes
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+_Esta aplicación esta desarrollada con Laravel, Inertia.js, React, Materialize._
 
-## About Laravel
+![page1](https://user-images.githubusercontent.com/53574794/139932009-2ced8509-ca63-49bb-8d40-b90c39e5c403.PNG)
+![pag2](https://user-images.githubusercontent.com/53574794/139932873-bc78e24a-b863-4bd2-8df6-8e49a7c6d7e6.PNG)
+![page3](https://user-images.githubusercontent.com/53574794/139935044-12c45b23-e8eb-4615-b650-e09de611ce94.PNG)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Comenzando 🚀
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Mira **Despliegue** para conocer como desplegar el proyecto.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Pre-requisitos 📋
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+_Para poder instalar y probar este proyecto debes tener instalado los siguientes programas:_
 
-## Laravel Sponsors
+* **Composer**. Descargar desde su [pagina oficial](https://getcomposer.org/download/)
+* **Interprete de PHP**
+* **Sistema Gestor de Base de Datos** (puede ser MySQL, SQL Lite, PostgreSQL o SQL Server)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+_Para installar el interprete de PHP y MySQL puede usar [XAMP](https://www.apachefriends.org/es/index.html)_
 
-### Premium Partners
+### Instalación 🔧
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
 
-## Contributing
+1. _Una vez clonado el proyecto. Abre una terminal o consola, posicionate en la raiz del proyecto y ejecuta el comando:_
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+composer install
+```
 
-## Code of Conduct
+2. _Crear una base de datos. Entre las bases de datos que soporta Laravel por defecto, encontramos: MySQL, SQL Lite, PostgreSQL y SQL Server._
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+3. _Crear el archivo .env. Podemos duplicar el archivo .env.example, renombrarlo a .env e incluir los datos de conexión de la base de datos que indicamos en el paso anterior._
 
-## Security Vulnerabilities
+![env](https://user-images.githubusercontent.com/53574794/139922781-9b5ca1d9-a47e-4824-96ce-a995750a31cc.PNG)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. _Generar una clave de aplicación. Para crear la nueva clave e insertarla automáticamente en el .env, ejecuta:_
 
-## License
+```
+php artisan key:generate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+5. _Por último, ejecuta las migraciones para que se generen las tablas mediante el comando:_
+
+```
+php artisan migrate
+```
+
+## Despliegue 📦
+
+_Para realizar un despliegue rapido, ejecuta el comando_
+
+```
+php artisan serve
+```
+
+_Abre la ruta que devuelve el comando anterior en un navegador_
+
+## Construido con 🛠️
+
+* [Laravel](https://laravel.com/) - El framework PHP
+* [Inertia.js](https://inertiajs.com/) - Conecta el backend con el frontend.
+* [React](https://es.reactjs.org/) - Una biblioteca de JavaScript para construir interfaces de usuario
+* [Materialize](https://materializecss.com/) - Un framework front-end moderno y receptivo basado en Material Design
+
+## Autores ✒️
+
+* **Martín Monjaraz Almaraz**
+
+## Expresiones de Gratitud 🎁
+
+* Comenta a otros sobre este proyecto 📢
+* Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
+* Da las gracias públicamente 🤓.
+* etc.
