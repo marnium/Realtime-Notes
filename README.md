@@ -76,5 +76,3 @@ _Abre la ruta que devuelve el comando anterior en un navegador_
 
 * Comenta a otros sobre este proyecto 📢
 * Invita una cerveza 🍺 o un café ☕ a alguien del equipo. 
-* Da las gracias públicamente 🤓.
-* etc.
